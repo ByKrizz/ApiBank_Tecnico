@@ -6,11 +6,13 @@ package com.byKrizz.cuentas.infrastructure.adapter.out;
 
 import com.byKrizz.cuentas.infrastructure.adapter.out.repository.jpa.CuentaRepositoryJpa;
 import com.byKrizz.cuentas.domain.ports.out.GenerateNumeroCuentaPort;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author chris
  */
+@Component
 public class GenerateNumeroCuenta  implements GenerateNumeroCuentaPort {
 
     private final CuentaRepositoryJpa cuentaRepository;

@@ -11,11 +11,13 @@ import com.byKrizz.cuentas.domain.ports.out.ClienteRemoteService;
 import com.byKrizz.cuentas.domain.ports.out.CuentaRepository;
 import com.byKrizz.cuentas.infrastructure.adapter.out.GenerateNumeroCuenta;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author chris
  */
+@Service
 public class CreateCuentaServiceImpl implements CreateCuentaService {
 
         private final CuentaRepository cuentaRepository;

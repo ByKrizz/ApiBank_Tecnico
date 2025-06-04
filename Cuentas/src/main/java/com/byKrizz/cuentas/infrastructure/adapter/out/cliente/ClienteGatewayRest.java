@@ -7,7 +7,9 @@ package com.byKrizz.cuentas.infrastructure.adapter.out.cliente;
 import com.byKrizz.cuentas.domain.model.Cliente;
 import com.byKrizz.cuentas.domain.ports.out.ClienteRemoteService;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,8 +17,13 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author chris
  */
-public class ClienteGatewayRest implements ClienteRemoteService  {
+@Component
+public class ClienteGatewayRest implements ClienteRemoteService {
+
     private final RestTemplate restTemplate;
+
+    @Value("${cliente.api.url}")
+    private String clienteApiUrl;
 
     public ClienteGatewayRest(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -26,8 +33,8 @@ public class ClienteGatewayRest implements ClienteRemoteService  {
     public Optional<Cliente> obtenerClientePorId(String clienteId) {
         try {
             ResponseEntity<Cliente> response = restTemplate.getForEntity(
-                "http://localhost:8080/clientes/" + clienteId,
-                Cliente.class
+                    clienteApiUrl+ "/clientes/"  + clienteId,
+                    Cliente.class
             );
             return Optional.ofNullable(response.getBody());
         } catch (HttpClientErrorException.NotFound e) {

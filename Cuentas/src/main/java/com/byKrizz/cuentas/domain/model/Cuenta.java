@@ -5,6 +5,7 @@
 package com.byKrizz.cuentas.domain.model;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +20,22 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Cuenta {
+
     private String numeroCuenta;
     private String tipo; // Ahorro, Corriente
     private BigDecimal saldoInicial;
     private boolean estado;
-    private Cliente cliente; 
+    private Cliente cliente;
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+
+
+
 }

@@ -27,6 +27,7 @@ public class CuentaMapper {
         entity.setTipo(cuenta.getTipo());
         entity.setSaldoInicial(cuenta.getSaldoInicial());
         entity.setEstado(cuenta.isEstado());
+        entity.setClienteId(cuenta.getCliente().getClienteId());
         return entity;
     }
 

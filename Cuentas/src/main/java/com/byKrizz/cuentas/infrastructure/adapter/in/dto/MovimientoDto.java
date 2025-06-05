@@ -18,4 +18,6 @@ public class MovimientoDto {
     private String numeroCuenta;
     private BigDecimal valorMovimiento;
     private String descripcion;
+
+
 }

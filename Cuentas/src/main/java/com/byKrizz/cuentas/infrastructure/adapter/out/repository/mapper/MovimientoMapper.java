@@ -46,7 +46,7 @@ public class MovimientoMapper {
         entity.setCuenta(CuentaMapper.toEntity(cuenta));
         entity.setTipo(m.getTipoMovimiento() != null ? TipoMovimiento.valueOf(m.getTipoMovimiento()) : null);
         entity.setValor(m.getValorMovimiento());
-        entity.setSaldoDisponible(m.getSaldoDisponible());
+        entity.setSaldoDisponible(cuenta.getSaldoInicial());
         entity.setFecha(m.getFechaMovimiento());
         entity.setDescripcion("Movimiento generado"); // o usa algún campo para descripción
         return entity;
@@ -59,7 +59,7 @@ public class MovimientoMapper {
         entity.setFecha(movimiento.getFechaMovimiento());
         entity.setTipo(movimiento.getTipoMovimiento() != null ? TipoMovimiento.valueOf(movimiento.getTipoMovimiento()) : null);
         entity.setValor(movimiento.getValorMovimiento());
-        entity.setSaldoDisponible(movimiento.getSaldoDisponible());
+        entity.setSaldoDisponible(cuentaEntity.getSaldoInicial());
         return entity;
     }
 }

@@ -5,6 +5,8 @@
 package com.byKrizz.cuentas.domain.ports.out;
 
 import com.byKrizz.cuentas.domain.model.Movimiento;
+import com.byKrizz.cuentas.infrastructure.adapter.out.repository.entidad.MovimientoEntity;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -16,4 +18,7 @@ public interface MovimientoRepository {
     Movimiento guardar(Movimiento movimiento);
 
     List<Movimiento> obtenerPorNumeroCuenta(String numeroCuenta);
+
+    List<Movimiento> findByCuentaClienteIdAndFechaMovimientoBetween(String clienteId, LocalDateTime desde, LocalDateTime hasta);
+
 }

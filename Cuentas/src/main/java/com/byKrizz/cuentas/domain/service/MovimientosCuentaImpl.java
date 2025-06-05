@@ -4,10 +4,14 @@
  */
 package com.byKrizz.cuentas.domain.service;
 
+import com.byKrizz.cuentas.domain.model.Cliente;
 import com.byKrizz.cuentas.domain.model.Cuenta;
 import com.byKrizz.cuentas.domain.model.Movimiento;
 import com.byKrizz.cuentas.domain.ports.in.MovimientoService;
+import com.byKrizz.cuentas.domain.ports.out.ClienteRemoteService;
 import com.byKrizz.cuentas.domain.ports.out.MovimientoRepository;
+import com.byKrizz.cuentas.infrastructure.adapter.in.dto.MovimientoDto;
+import com.byKrizz.cuentas.infrastructure.adapter.in.dto.ReporteDto;
 import com.byKrizz.cuentas.infrastructure.adapter.out.repository.entidad.CuentaEntity;
 import com.byKrizz.cuentas.infrastructure.adapter.out.repository.entidad.MovimientoEntity;
 import com.byKrizz.cuentas.infrastructure.adapter.out.repository.jpa.CuentaRepositoryJpa;
@@ -17,7 +21,9 @@ import com.byKrizz.cuentas.infrastructure.adapter.out.repository.mapper.Movimien
 import com.byKrizz.cuentas.shared.exeption.FondosInsuficientesException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -32,10 +38,12 @@ public class MovimientosCuentaImpl implements MovimientoService {
 
     private final MovimientoRepositoryJpa movimientoRepositoryJpa;
     private final CuentaRepositoryJpa cuentaRepositoryJpa;
+    private final ClienteRemoteService clienteRemoteService;
 
-    public MovimientosCuentaImpl(MovimientoRepositoryJpa movimientoRepositoryJpa, CuentaRepositoryJpa cuentaRepositoryJpa) {
+    public MovimientosCuentaImpl(MovimientoRepositoryJpa movimientoRepositoryJpa, CuentaRepositoryJpa cuentaRepositoryJpa, ClienteRemoteService clienteRemoteService) {
         this.movimientoRepositoryJpa = movimientoRepositoryJpa;
         this.cuentaRepositoryJpa = cuentaRepositoryJpa;
+        this.clienteRemoteService = clienteRemoteService;
     }
 
     public Movimiento guardar(Movimiento movimiento) {
@@ -96,5 +104,35 @@ public class MovimientosCuentaImpl implements MovimientoService {
         movimiento.setFechaMovimiento(LocalDateTime.now());
 
         guardar(movimiento);
+    }
+
+    @Override
+    public List<ReporteDto> findByCuentaClienteIdAndFechaMovimientoBetween(String clienteId, LocalDateTime desde, LocalDateTime hasta) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        List<MovimientoEntity> movimientos = movimientoRepositoryJpa
+                .findByCuentaClienteIdAndFechaBetween(clienteId, desde, hasta);
+
+        Cliente cliente = clienteRemoteService.obtenerClientePorId(clienteId)
+                .filter(Cliente::isEstado)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente no válido o inactivo"));
+
+        String clienteNombre = cliente.getNombres() != null ? cliente.getNombres() : "Cliente desconocido";
+
+        return movimientos.stream().map(m -> {
+            CuentaEntity cuenta = m.getCuenta();
+            String fechaFormateada = m.getFecha() != null ? m.getFecha().format(formatter) : "";
+
+            return new ReporteDto(
+                    fechaFormateada,
+                    clienteNombre,
+                    cuenta.getNumeroCuenta(),
+                    cuenta.getTipo(),
+                    cuenta.getSaldoInicial(),
+                    cuenta.isEstado(),
+                    m.getValor(),
+                    m.getSaldoDisponible()
+            );
+        }).collect(Collectors.toList());
     }
 }

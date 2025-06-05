@@ -42,6 +42,6 @@ public class CuentaEntity {
 
     private boolean estado;
 
-    @Column(name = "cliente_id ")
+    @Column(name = "clienteid")
     private String clienteId;
 }

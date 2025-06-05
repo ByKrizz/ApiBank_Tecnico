@@ -40,11 +40,8 @@ public class CreateCuentaServiceImpl implements CreateCuentaService {
         if (cliente.isEmpty() || !cliente.get().isEstado()) {
             throw new IllegalArgumentException("Cliente no válido o inactivo");
         }
-
-        // Generar número de cuenta personalizado
         cuenta.setNumeroCuenta(generadorNumeroCuentaPort.generarNumeroCuenta());
-
-        // Validaciones y estado por defecto
+        cuenta.setCliente(cliente.get());
         cuenta.setEstado(true);
         if (cuenta.getSaldoInicial() == null) {
             cuenta.setSaldoInicial(java.math.BigDecimal.ZERO);

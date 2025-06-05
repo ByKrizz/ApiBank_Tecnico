@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  app-cliente:
+    build: ./PruebaTecnica
+    container_name: customer-service
+    ports:
+      - "8080:8080"
+    environment:            
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/pruebatecnica
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+        db : 
+          condition: service_healthy
+  app-cuenta:
+    build: ./Cuentas
+    container_name: account-service
+    ports:
+      - "8082:8082"
+    environment:            
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/pruebatecnica
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      URL_CLIENTES: http://app-cliente:8080
+    depends_on:
+        db : 
+          condition: service_healthy
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pruebatecnica
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+volumes:
+  mysql-data:

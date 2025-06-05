@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.byKrizz.cliente.adapters.out.repository.entidad;
+package com.byKrizz.demo.infrastructure.adapters.out.repository.entidad;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

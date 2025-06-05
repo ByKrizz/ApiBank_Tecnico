@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.byKrizz.cliente.adapters.out.repository.mapper;
+package com.byKrizz.demo.infrastructure.adapters.out.repository.mapper;
 
-import com.byKrizz.cliente.adapters.in.dto.ClienteDto;
-import com.byKrizz.cliente.adapters.out.repository.entidad.ClienteEntity;
+import com.byKrizz.demo.infrastructure.adapters.in.dto.ClienteDto;
+import com.byKrizz.demo.infrastructure.adapters.out.repository.entidad.ClienteEntity;
 import com.byKrizz.cliente.domain.model.Cliente;
 import org.springframework.stereotype.Component;
 

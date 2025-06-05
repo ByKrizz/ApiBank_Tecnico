@@ -1,4 +1,4 @@
-package com.byKrizz.cliente;
+package com.byKrizz;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

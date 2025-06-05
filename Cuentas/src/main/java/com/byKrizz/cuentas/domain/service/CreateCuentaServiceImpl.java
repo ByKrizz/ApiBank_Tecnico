@@ -10,6 +10,7 @@ import com.byKrizz.cuentas.domain.ports.in.CreateCuentaService;
 import com.byKrizz.cuentas.domain.ports.out.ClienteRemoteService;
 import com.byKrizz.cuentas.domain.ports.out.CuentaRepository;
 import com.byKrizz.cuentas.infrastructure.adapter.out.GenerateNumeroCuenta;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class CreateCuentaServiceImpl implements CreateCuentaService {
 
-        private final CuentaRepository cuentaRepository;
+    private final CuentaRepository cuentaRepository;
     private final ClienteRemoteService clienteRemoteService;
     private final GenerateNumeroCuenta generadorNumeroCuentaPort;
 
     public CreateCuentaServiceImpl(CuentaRepository cuentaRepository,
-                                   ClienteRemoteService clienteRemoteService,
-                                   GenerateNumeroCuenta generadorNumeroCuentaPort) {
+            ClienteRemoteService clienteRemoteService,
+            GenerateNumeroCuenta generadorNumeroCuentaPort) {
         this.cuentaRepository = cuentaRepository;
         this.clienteRemoteService = clienteRemoteService;
         this.generadorNumeroCuentaPort = generadorNumeroCuentaPort;
@@ -50,5 +51,30 @@ public class CreateCuentaServiceImpl implements CreateCuentaService {
         }
 
         return cuentaRepository.guardar(cuenta);
+    }
+
+    @Override
+    public Optional<Cuenta> obtenerPorNumero(String numeroCuenta) {
+        return cuentaRepository.obtenerPorNumero(numeroCuenta);
+    }
+
+    @Override
+    public List<Cuenta> obtenerTodas() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void eliminar(String numeroCuenta) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public long count() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Cuenta> obtenerPorClienteId(String clienteId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

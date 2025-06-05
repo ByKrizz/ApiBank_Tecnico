@@ -34,16 +34,10 @@ public class CuentaRepositoryAdapter implements CuentaRepository {
     }
 
     @Override
-    public Optional<Cuenta> obtenerPorNumero(String numeroCuenta) {
-        return cuentaRepositoryJpa.findById(numeroCuenta)
-                .map(cuentaMapper::toDomain);
-    }
-
-    @Override
     public List<Cuenta> obtenerTodas() {
         return cuentaRepositoryJpa.findAll()
                 .stream()
-                .map(cuentaMapper::toDomain)
+                .map(CuentaMapper::toDomain)
                 .collect(Collectors.toList());
     }
 
@@ -62,7 +56,13 @@ public class CuentaRepositoryAdapter implements CuentaRepository {
         return cuentaRepositoryJpa.findAll()
                 .stream()
                 .filter(c -> c.getClienteId().equals(clienteId))
-                .map(cuentaMapper::toDomain)
+                .map(CuentaMapper::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Cuenta> obtenerPorNumero(String numeroCuenta) {
+        return cuentaRepositoryJpa.findById(numeroCuenta)
+                .map(CuentaMapper::toDomain);
     }
 }

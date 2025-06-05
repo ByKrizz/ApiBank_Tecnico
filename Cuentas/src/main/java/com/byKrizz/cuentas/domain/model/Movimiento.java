@@ -5,6 +5,7 @@
 package com.byKrizz.cuentas.domain.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,9 +22,15 @@ import lombok.Setter;
 @Setter
 public class Movimiento {
 
-    private Long id;
     private String numeroCuenta;
-    private TipoMovimiento tipo; // DEBITO o CREDITO
-    private BigDecimal valor;
-    private LocalDateTime fecha;
+    private String tipoCuenta;         // Ej: AHORROS, CORRIENTE
+    private BigDecimal saldoInicial;
+    private boolean estadoCuenta;       // Ej: ACTIVA, INACTIVA
+    private String tipoMovimiento;     // CREDITO o DEBITO
+    private BigDecimal valorMovimiento;
+
+    private BigDecimal saldoDisponible;
+
+    private String descripcion;
+    private LocalDateTime  fechaMovimiento;
 }

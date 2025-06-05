@@ -4,15 +4,15 @@
  */
 package com.byKrizz.cuentas.infrastructure.adapter.out.repository.jpa;
 
-import com.byKrizz.cuentas.infrastructure.adapter.out.repository.entidad.CuentaEntity;
-import java.util.Optional;
+import com.byKrizz.cuentas.domain.model.Movimiento;
+import com.byKrizz.cuentas.infrastructure.adapter.out.repository.entidad.MovimientoEntity;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author chris
  */
-public interface CuentaRepositoryJpa  extends JpaRepository<CuentaEntity, String> {
-        Optional<CuentaEntity> findByNumeroCuenta(String numeroCuenta);
-
+public interface MovimientoRepositoryJpa extends JpaRepository<MovimientoEntity, Long> {
+     List<MovimientoEntity> findByCuentaNumeroCuenta(String numeroCuenta);
 }

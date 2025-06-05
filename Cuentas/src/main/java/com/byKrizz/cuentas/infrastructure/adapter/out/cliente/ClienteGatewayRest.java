@@ -31,12 +31,29 @@ public class ClienteGatewayRest implements ClienteRemoteService {
 
     @Override
     public Optional<Cliente> obtenerClientePorId(String clienteId) {
+//        try {
+//            ResponseEntity<Cliente> response = restTemplate.getForEntity(
+//                    clienteApiUrl+ "/clientes/"  + clienteId,
+//                    Cliente.class
+//            );
+//            return Optional.ofNullable(response.getBody());
+//        } catch (HttpClientErrorException.NotFound e) {
+//            return Optional.empty();
+//        }
         try {
             ResponseEntity<Cliente> response = restTemplate.getForEntity(
-                    clienteApiUrl+ "/clientes/"  + clienteId,
+                    clienteApiUrl + "/clientes/" + clienteId,
                     Cliente.class
             );
-            return Optional.ofNullable(response.getBody());
+
+            Cliente cliente = response.getBody();
+            // Validar que no sea un "cliente vacío"
+            if (cliente == null || cliente.getNombres() == null) {
+                return Optional.empty();
+            }
+
+            return Optional.of(cliente);
+
         } catch (HttpClientErrorException.NotFound e) {
             return Optional.empty();
         }

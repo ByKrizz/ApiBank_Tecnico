@@ -4,15 +4,18 @@
  */
 package com.byKrizz.cuentas.infrastructure.adapter.out.repository.entidad;
 
-import jakarta.persistence.Column;
+import com.byKrizz.cuentas.domain.model.Cuenta;
+import com.byKrizz.cuentas.domain.model.TipoMovimiento;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,25 +26,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tbl_cuentas")
-public class CuentaEntity {
-
+@Table(name = "tbl_movimiento")
+public class MovimientoEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String numeroCuenta;
+    @ManyToOne
+    private CuentaEntity  cuenta;
 
-//    @Enumerated(EnumType.STRING)
-//    private String tipo;
-    @Column(name = "tipo")
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    private TipoMovimiento tipo;
 
-    @Column(nullable = false)
-    private BigDecimal saldoInicial = BigDecimal.ZERO;
+    private BigDecimal valor;
 
-    private boolean estado;
+    private BigDecimal saldoDisponible;
 
-    @Column(name = "cliente_id ")
-    private String clienteId;
+    private String descripcion;
+
+    private LocalDateTime fecha;
 }

@@ -33,10 +33,10 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copia el archivo JAR generado del contenedor de construcción
-COPY target/demo-0.0.1-SNAPSHOT.jar /app/demo.jar
+COPY target/cliente-0.0.1-SNAPSHOT.jar /app/cliente.jar
 
 # Expone el puerto que usa la aplicación Spring Boot
 EXPOSE 8080
 
 # Comando para ejecutar la aplicación en el contenedor
-ENTRYPOINT ["java", "-jar", "/app/demo.jar"]
+ENTRYPOINT ["java", "-jar", "/app/cliente.jar"]

@@ -47,7 +47,7 @@ public class RepositoryClienteImpl implements RepositoryCliente {
                 .map(ClienteMapper::toDomain)
                 .collect(Collectors.toList());
     }
-
+ 
     @Override
     public void eliminar(String clienteId) {
         jpa.deleteById(clienteId);
